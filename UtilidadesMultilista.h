@@ -1,32 +1,51 @@
 #include "UtilidadesPila.h"
 
-struct multilista {
+struct multipila {
 	int valor;
-	multilista *sig;
-	lista *abajo;
+	multipila *sig;
+	pila *abajo;
+};
+struct CentroVentas{
+	int codigo;
+	int telf;
+	int nombre[20];
+	int ciudad[20];
+	int estado[20];
+	int direccion[40];
+	CentroVentas *sig;
+	ventasHechas *abajo;
+	productos *prox;
 };
 
-multilista *crearMulti(int x){
-	multilista *t = new multilista;
+struct Clientes{
+	char nombre[20];
+	int cedula;
+	char direccion[40];
+	Clientes *sig;
+	comprasHechas *abajo;
+};
+
+multipila *crearMulti(int x){
+	multipila *t = new multipila;
 	t->valor = x;
 	t->sig = NULL;
 	t->abajo = NULL;
 	return t;
 }
 
-int vacioMulti(multilista *p){
+int vacioMulti(multipila *p){
 	return (p==NULL);
 }
 
-void nuevoMulti(multilista **p, int x){
-	multilista *t = crearMulti(x);
+void nuevoMulti(multipila **p, int x){
+	multipila *t = crearMulti(x);
 	t->sig = *p;
 	t->abajo = NULL;
 	*p=t;
 }
 
-void nuevoSublista(multilista *p, int y, int x){
-	 lista *nuevoSub = new lista;
+void nuevoSubpila(multipila *p, int y, int x){
+	 pila *nuevoSub = new pila;
 	 if(!vacioMulti(p)){
 		if (p->valor==y){
 			if (vacio(p->abajo)){
@@ -41,26 +60,26 @@ void nuevoSublista(multilista *p, int y, int x){
 			}
 		}
 		else{
-			nuevoSublista(p->sig,y,x);
+			nuevoSubpila(p->sig,y,x);
 		}	 
 	 }	 
 }
 
-int primeroMulti(multilista *p){
+int primeroMulti(multipila *p){
 	if (!vacioMulti(p))
 		return p->valor;
 	return 0;
 }
 
-void borrarMulti(multilista **p){
+void borrarMulti(multipila **p){
 	if(!vacioMulti(*p)){
-		multilista *aux=*p;
+		multipila *aux=*p;
 		*p=(*p)->sig;
 		delete aux;
 	}
 }
 
-int buscarMulti(multilista *p, int x){
+int buscarMulti(multipila *p, int x){
 	if (!vacioMulti(p)){
 		if (p->valor == x)
 			return 1;
@@ -70,7 +89,7 @@ int buscarMulti(multilista *p, int x){
 	return 0;
 }
 
-/*void buscaEnPrin(multilista *p, multilista **aux, int x){
+/*void buscaEnPrin(multipila *p, multipila **aux, int x){
 	if(!vacioMulti(p))
 		if (p->valor==x)
 			*aux=p;
@@ -78,16 +97,16 @@ int buscarMulti(multilista *p, int x){
 			buscaEnPrin(p->sig,aux,x);
 }*/
 
-void mostrarMulti ( multilista *p){
-	multilista *aux = p;
+void mostrarMulti ( multipila *p){
+	multipila *aux = p;
 	while ( aux!= NULL ) {
 		printf ( "[%i]->",aux->valor);
 		aux= aux->sig;
 	};
 };
 
-void mostrarSub (multilista *p, int y){
-	lista *t = p->abajo;
+void mostrarSub (multipila *p, int y){
+	pila *t = p->abajo;
 	if (p->valor==y){
 		if ( p->abajo!= NULL ) {							
 			mostrar(p->abajo);
@@ -97,20 +116,42 @@ void mostrarSub (multilista *p, int y){
 	else mostrarSub(p->sig,y);
 }
 
-void mostrarTodo(multilista *p){
+void mostrarTodo(multipila *p){
 
 }
-void buscarXEnSubs(multilista *p, int x){
-	lista *t = new lista;
+/*void buscarXEnSubs(multipila *p, int x){
+	pila *t = new pila;
 	if(!vacioMulti(p)){
 		if(!vacio(p->abajo)){
 			t=p->abajo;
 			if (buscar(t,x)==1)
-				printf("El valor %i se encuentra en la sublista del indice %i\n",x, p->valor);			 
+				printf("El valor %i se encuentra en la subpila del indice %i\n",x, p->valor);			 
 			buscarXEnSubs(p->sig, x);
 		}
 		else
 			buscarXEnSubs(p->sig, x);
 
 	}
-}
+}*/
+/*void moverDeAaB(multipila *p, int x, int y, int z){
+	pila *t = new pila;
+	pila *aux = new pila;
+	if (!vacioMulti(p)){
+			t=p->abajo;
+			if (p->abajo->valor==z){
+				p->abajo=t->sig;
+				nuevoSubpila(p,y,t->valor);
+
+			}
+			else if ((p->abajo->valor!=z) && (buscar(t->sig,x)==1) && (t->sig->sig!=NULL)){
+				aux=t->sig;
+				t->sig = t->sig->sig;
+				nuevoSubpila(p,y,aux->valor);					
+			}
+			else{
+				bu
+			}
+											 			
+		}
+	}
+*/
