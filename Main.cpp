@@ -13,9 +13,9 @@ void main ( ){
 	/* importante: Crear el puntero cabeza e INICIALIZARLO en NULL */
 	//pila *aba = new pila;
 	//multipila *principal= NULL;
-	CentroVentas *centros=NULL;
-	Clientes *cliente=NULL;
-	productos *producto=NULL;
+	CentroVentas *p=NULL;
+	Clientes *c=NULL;
+	productos *pr=NULL;
 	while (op!=0){
 		system( "cls");
 		printf("\n\n");
@@ -33,45 +33,23 @@ void main ( ){
 		
 		switch (op){
 			case 1: 
-				printf ("\nIngrese Codigo Del Centro\n");
-				scanf("%i",&x);
-				printf ("\nIngrese Telefono Del Centro\n");
-				scanf("%i",&y);
-				printf ("\nIngrese Nombre Del Centro\n");
-				scanf("%s",&nom);
-				printf ("\nIngrese Ciudad Del Centro\n");
-				scanf("%s",&ciu);
-				printf ("\nIngrese Estado Del Centro\n");
-				scanf("%s",&est);
-				printf ("\nIngrese Direccion Del Centro\n");
-				scanf("%s",&dir);
-				nuevoCentro(&centros,x,y,nom, ciu, est, dir);
+				agregarcentro(&p);
 				break;
 			case 2:
-				mostrarCentros(centros);
+				mostrarCentros(p);
 				break;
 			case 3:
-				printf ("\nIngrese Cedula\n");
-				scanf("%i",&x);
-				printf ("\nIngrese Nombre\n");
-				scanf("%s",&nom);
-				printf ("\nIngrese Direccion\n");
-				scanf("%s",&dir);
-				nuevoCliente(&cliente,nom,x, dir);
+				agregarcliente(&c);
 				break;
 			case 4:
-				mostrarClientes(cliente);
+				mostrarClientes(c);
 				break;
-			case 5:printf ("\nIngrese Codigo\n");
-				scanf("%i",&x);
-				printf ("\nIngrese Precio\n");
-				scanf("%i",&y);
-				printf ("\nIngrese Cantidad\n");
-				scanf("%i",&z);
-				nuevoProductos(&producto,x,y,z);
+			case 5:
+				printf("ingrese productos");
+				agregarproducto(&pr);
 				break;
 			case 6:
-				 mostrarProductos(producto);
+				 mostrarProductos(pr);
 				 break;
 			/*case 1 :
 				if(principales!=NULL){

@@ -14,7 +14,7 @@ fechaVentas *CrearFechaVentas(int x){
 			aux->sig=NULL;
 			aux->abajo=NULL;
 }*/
-CentroVentas *CrearCentroVentas(int x,int y,char nom[20],char ciu[20],char est[20],char dir[40]){
+/*CentroVentas *CrearCentroVentas(int x,int y,char nom[20],char ciu[20],char est[20],char dir[40]){
 	CentroVentas *aux=new CentroVentas;
 	aux->codigo=x;
 	aux->telf=y;
@@ -45,4 +45,4 @@ productos *CrearProductos(int cod, int prec, int cant){
 	aux->cantidad=cant;
 	aux->sig=NULL;
 	return aux;
-}
+}*/ 

@@ -7,11 +7,8 @@ struct multipila {
 };
 struct CentroVentas{
 	int codigo;
-	int telf;
-	int nombre[20];
-	int ciudad[20];
-	int estado[20];
-	int direccion[40];
+	char telf[20];
+	char nombre[20], ciudad[20], estado[20], direccion[40];
 	CentroVentas *sig;
 	ventasHechas *abajo;
 	productos *prox;

@@ -62,12 +62,12 @@ int repetidocentrodeventas(centroDeVentas **p, int x){
 }*/
 
 
-void nuevoCentro(CentroVentas **p, int x,int y,char nom[20],char ciu[20],char est[20],char dir[40]){
-	CentroVentas *aux=CrearCentroVentas(x,y,nom,ciu,est,dir);
+/*void nuevoCentro(CentroVentas **p, int x,int y,char nom[20],char ciu[20],char est[20],char dir[40]){
+	CentroVentas *aux=agregarcentro(p);
 	CentroVentas *t=*p;
 	int i=0;
 	if (!t)
-		*p=aux;
+		*p=t;
 	else{
 		while (t){
 			if (t->codigo!=aux->codigo)
@@ -78,85 +78,157 @@ void nuevoCentro(CentroVentas **p, int x,int y,char nom[20],char ciu[20],char es
 			}
 		}	
 		if (i==0){
-			aux->sig=*p;
-			*p=aux;
+			t->sig=*p;
+			*p=t;
 		}
 	}
-}
-
-void nuevoCliente(Clientes **p,char nom[20], int x,char dir[40]){
-	Clientes *aux=CrearCliente(nom,x,dir);
-	Clientes *t=*p;
-	int i=0;
-	if (!t)
-		*p=aux;
-	else{
-		while (t){
-			if (t->cedula!=aux->cedula)
-				t=t->sig;
-			else{
-				i++;
-				t=t->sig;
-			}
-		}	
-		if (i==0){
-			aux->sig=*p;
-			*p=aux;
-		}
-	}
-}
-
-void nuevoProductos(productos **p,int cod, int prec,int cant){
-	productos *aux=CrearProductos(cod,prec,cant);
-	productos *t=*p;
-	int i=0;
-	if (!t)
-		*p=aux;
-	else{
-		while (t){
-			if (t->codigo!=aux->codigo)
-				t=t->sig;
-			else{
-				i++;
-				t=t->sig;
-			}
-		}	
-		if (i==0){
-			aux->sig=*p;
-			*p=aux;
-		}
-	}
-}
-
+}*/ 
 void mostrarCentros(CentroVentas *p){
 	if (p){
 		printf("Codigo		: %i\n", p->codigo);
-		/*printf("Telefono	: %i\n", p->telf);
+		printf("Telefono	: %s\n", p->telf);
 		printf("Nombre		: %s\n", p->nombre);
 		printf("Ciudad		: %s\n", p->ciudad);
 		printf("Estado		: %s\n", p->estado);
-		printf("Direccion	: %s\n", p->direccion);*/
+		printf("Direccion	: %s\n", p->direccion);
+		printf("\n--------------------------------\n");
 		mostrarCentros(p->sig);
 	}
+}
+void agregarcentro(CentroVentas **p){
+	//int i=0,x=0;
+	FILE *centro;
+	centro=fopen("centros.txt","r");		
+		while(!feof(centro)){
+		int i=0,x=0;
+		CentroVentas *aux=*p;
+		CentroVentas *t=new CentroVentas;
+		fscanf(centro,"%i\n",&x);
+		t->codigo=x;
+		//printf("2. Nombre del centro:\n");
+		fscanf(centro,"%s\n",t->nombre);
+		//printf("3. Nombre de la cuidad:\n");
+		fscanf(centro,"%s\n",t->ciudad);
+		//printf("4. Nombre del estado:\n");
+		fscanf(centro,"%s\n",t->estado);
+		//printf("5. Direccion del centro:\n");
+		fscanf(centro,"%s\n",t->direccion);
+		//printf("6. Telefono del centro:\n");
+		fscanf(centro,"%s\n",t->telf);
+		if (!aux){
+			t->sig=NULL;
+			t->abajo=NULL;
+			t->prox=NULL;
+			*p=t;}
+	    else{
+		while (aux){
+			if (t->codigo!=aux->codigo)
+				aux=aux->sig;
+			else{
+				i++;
+				aux=aux->sig;
+			}
+		}	
+		if (i==0){
+			t->sig=*p;
+			t->abajo=NULL;
+			t->prox=NULL;
+			*p=t;
+		}
+		}
+		}
+		fclose(centro);
+		mostrarCentros(*p);
 }
 
 void mostrarClientes(Clientes *p){
 	if (p){
 		printf("Cedula		: %i\n", p->cedula);
-		/*printf("Telefono	: %i\n", p->telf);
 		printf("Nombre		: %s\n", p->nombre);
-		printf("Ciudad		: %s\n", p->ciudad);
-		printf("Estado		: %s\n", p->estado);
-		printf("Direccion	: %s\n", p->direccion);*/
+		printf("Direccion	: %s\n", p->direccion);
+		printf("\n--------------------------------\n");
 		mostrarClientes(p->sig);
 	}
 }
-
+void agregarcliente(Clientes **p){
+	FILE *cliente;
+	cliente=fopen("listaclientes.txt","r");		
+	while(!feof(cliente)){
+	int i=0,x=0;
+	Clientes *aux=*p;
+		//printf("Agrege nuevo cliente\n");
+		Clientes *t=new Clientes;
+		//printf("1. Cedula del cliente:\n");
+		fscanf(cliente,"%i",&x);
+		t->cedula=x;
+		//printf("2. Nombre del cliente:\n");
+		fscanf(cliente,"%s",t->nombre);
+		//printf("3. Direccion del cliente:\n");
+		fscanf(cliente,"%s",t->direccion);
+		if (!aux){
+			t->sig=NULL;
+			t->abajo=NULL;
+			*p=t;}
+	    else{
+		while (aux){
+			if (t->cedula!=aux->cedula)
+				aux=aux->sig;
+			else{
+				i++;
+				aux=aux->sig;
+			}
+		}	
+		if (i==0){
+			t->sig=*p;
+			t->abajo=NULL;
+			*p=t;
+		}
+	}
+	}
+	fclose(cliente);
+	mostrarClientes(*p);
+}
 void mostrarProductos(productos *p){
 	if (p){
-		printf("Codigo		: %i\n", p->codigo);
-		printf("Precio      : %i BSF \n", p->precio);
-		printf("Cantidad	: %i\n", p->cantidad);
+		printf("Codigo		 : %i\n", p->codigo);
+		printf("Precio       : %i BSF \n", p->precio);
+		printf("Cantidad	 : %i\n", p->cantidad);
+		printf("\n--------------------------------\n");
 		mostrarProductos(p->sig);
 	}
+}
+
+void agregarproducto(productos **p){
+	FILE *listaproductos;
+	listaproductos=fopen("%s.txt","r");		
+	while(!feof(listaproductos)){
+	int i=0,x=0,y=0,z=0;
+	productos *aux=*p;	
+		productos *t=new productos;
+		scanf("%i",&x);
+		t->codigo=x;
+		scanf("%i",&z);
+		t->precio=z;
+		scanf("%i",&y);
+		t->cantidad=y;	
+		if (!aux){
+			t->sig=NULL;
+			*p=t;}
+	    else{
+		while (aux){
+			if (t->codigo!=aux->codigo)
+				aux=aux->sig;
+			else{
+				i++;
+				aux=aux->sig;
+			}
+		}	
+		if (i==0){
+			t->sig=*p;
+			*p=t;
+		}
+	}
+	}
+	fclose(listaproductos);
+	mostrarProductos(*p);
 }
