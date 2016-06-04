@@ -93,33 +93,36 @@ void eliminarcliente(Clientes **p){
 		}
 
 }
-void eliminarProductoGlobal(CentroVentas *p){
-	int x;
-	printf("Indique Codigo Del Producto a Eliminar");
-	scanf("\n%i",&x);
-	while ((p)&&(p->prox)){
-	//productos *t=p->prox;
+void eliminarProductoGlobal(CentroVentas *p,int x){
+	if (p){
+	productos *aux=new productos;
+	if(p->prox)
+		printf("%i",p->prox->codigo);
+	productos *help=p->prox;
+	if(help)
+		printf("%i",help->codigo);
 
-		if(p->prox->codigo==x){
-		productos *t=p->prox;
-		p->prox=t->sig;
-		delete t;
-		break;
-	}
-	else{
-		productos *t=p->prox;
-		while(t->sig){
-			if(t->sig->codigo==x){
-				productos *aux=new productos;
-				aux=t->sig;
-				t->sig=aux->sig;
-				delete aux;
-				break;
-			}
-			t=t->sig;
+	if ((p)&&(p->prox)){	
+		
+		if(help->codigo==x){		
+		p->prox=help->sig;
+		delete help;
 		}
+		else {		
+			while(help->sig!=NULL){
+				if(help->sig->codigo==x){					
+					aux=help->sig;
+					help->sig=help->sig->sig;
+					aux->sig=NULL;
+					delete aux;
+					break;
+				}
+			help=help->sig;
+			}
+		}
+
+	eliminarProductoGlobal(p->sig,x);
 	}
-	p=p->sig;
-	}
-	
+}
+	else printf("eliminados");
 }

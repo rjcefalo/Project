@@ -14,7 +14,6 @@ void mostrarCentros(CentroVentas *p){
 	}
 }
 void agregarcentro(CentroVentas **p){
-	//int i=0,x=0;
 	FILE *centro;
 	centro=fopen("centros.txt","r");		
 		while(!feof(centro)){
@@ -23,15 +22,10 @@ void agregarcentro(CentroVentas **p){
 		CentroVentas *t=new CentroVentas;
 		fscanf(centro,"%i\n",&x);
 		t->codigo=x;
-		//printf("2. Nombre del centro:\n");
 		fscanf(centro,"%s\n",t->nombre);
-		//printf("3. Nombre de la cuidad:\n");
 		fscanf(centro,"%s\n",t->ciudad);
-		//printf("4. Nombre del estado:\n");
 		fscanf(centro,"%s\n",t->estado);
-		//printf("5. Direccion del centro:\n");
 		fscanf(centro,"%s\n",t->direccion);
-		//printf("6. Telefono del centro:\n");
 		fscanf(centro,"%s\n",t->telf);
 		if (!aux){
 			t->sig=NULL;

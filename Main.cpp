@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "modificareliminar.h"
+#include "cargar.h"
 
 
 
 void main ( ){
 	int x=0, y=0, z=0, op= -1;
+	int fecha=1;
 	char nom[20], ciu[20], est[20], dir[40];
 	FILE *principales = fopen("princip.txt","r");
 	FILE *subLista = fopen("sub.txt","r");
@@ -66,6 +67,7 @@ void main ( ){
 				agregarproducto(p,&pr);
 				break;
 			case 10:
+
 				agregarproductomanual(p);
 				break;
 
@@ -75,9 +77,20 @@ void main ( ){
 				mostrarCenPro (p,x);
 				break;
 			case 12:
-				eliminarProductoGlobal(p);
+				printf("ingrese codigo del producto que desee eliminar");
+				scanf("%i",&x);
+				eliminarProductoGlobal(p,x);
 				break;
-			
+			case 13:
+				while (colapso){
+				cargartodo(p,c,fecha);
+				fecha=fecha+1;
+				}
+				break;
+			case 14:
+				printf("%i",colapso(p));
+				break;
+
 		};
 		if ( op!=0) system("pause");
 	};
