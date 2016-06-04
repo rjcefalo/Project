@@ -86,14 +86,6 @@ int buscarMulti(multipila *p, int x){
 	return 0;
 }
 
-/*void buscaEnPrin(multipila *p, multipila **aux, int x){
-	if(!vacioMulti(p))
-		if (p->valor==x)
-			*aux=p;
-		else
-			buscaEnPrin(p->sig,aux,x);
-}*/
-
 void mostrarMulti ( multipila *p){
 	multipila *aux = p;
 	while ( aux!= NULL ) {
