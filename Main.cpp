@@ -1,84 +1,83 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "UtilidadesMultilista.h"
+#include <string.h>
+#include "modificareliminar.h"
 
 
 
 void main ( ){
-	int x=0, y=0, op= -1;
+	int x=0, y=0, z=0, op= -1;
+	char nom[20], ciu[20], est[20], dir[40];
 	FILE *principales = fopen("princip.txt","r");
 	FILE *subLista = fopen("sub.txt","r");
 	/* importante: Crear el puntero cabeza e INICIALIZARLO en NULL */
-	lista *aba = new lista;
-	multilista *principal= NULL;
+	//pila *aba = new pila;
+	//multipila *principal= NULL;
+	CentroVentas *p=NULL;
+	Clientes *c=NULL;
+	productos *pr=NULL;
 	while (op!=0){
 		system( "cls");
 		printf("\n\n");
 		printf( "     MENU MANEJO DE LISTAS DINAMICAS\n\n");
-		printf ("1. Insertar elemento en lista UNO\n");
-		printf ("2. Insertar elemento en Sub-lista\n");
-		printf ("3. Mostrar Lista Principal\n");
-		printf ("4. Mostrar Sub-lista\n");
-		printf ("5. Buscar X en principal\n");
+		printf ("1. Cargar Centros De Venta Desde Archivo\n");
+		printf ("2. Agregar Centros De Venta Manualmente\n");
+		printf ("3. Mostrar Centros De Venta\n");
+		printf ("4. Eliminar Centro de Codigo X\n");
+		printf ("5. Cargar Clientes Desde Archivo\n");
+		printf ("6. Agregar Nuevo Cliente Manual\n");
+		printf ("7. Mostrar Clientes\n");
+		printf ("8. Eliminar Cliente de Cedula X\n");
+		printf ("9. Cargar Producto Desde Archivo a Centro de Codigo X\n");
+		printf ("10. Crear Nuevo Producto Manual\n");
+		printf ("11. Mostrar Productos de Centro X\n");
+		printf ("12. Eliminar Producto Global\n");
 		printf ("0. Salir\n");
 		scanf_s ("%i", &op);
 		system( "cls" );
 		printf( "\n\n");
 		
 		switch (op){
-			case 1 :
-				if(principales!=NULL){
-					printf ("Archivo princip.txt CARGADO\n");
-					while(!feof(principales)){
-						fscanf(principales,"%i\n",&x);
-						nuevoMulti(&principal,x);
-					}
-					fclose(principales);
-				}
-				else{
-					printf ("Archivo princip.txt No encontrado\n");
-					printf ("1. Insertar elemento en lista\n");
-					scanf_s("%i", &x);
-					nuevoMulti(&principal,x);
-				}
+			case 1: 
+				agregarcentro(&p);
 				break;
-			case 2:				
-				printf ("2. Insertar elemento en Sub-lista\n");
-				printf ("Elija Sub-lista a insertar\n");
-				scanf_s("%i", &y);
-
-				if(subLista!=NULL){					
-					while(!feof(subLista)){
-						fscanf(subLista,"%i\n",&x);
-						nuevoSublista(principal,y,x);
-					}
-					fclose(principales);
-					printf ("Archivo sub.txt CARGADO\n");
-				}
-				else{
-					printf ("Archivo sub.txt No encontrado\n");
-					printf ("Numero a insertar en sublista\n");
-					scanf_s("%i", &x);
-					nuevoSublista(principal,y,x);
-				}
+			case 2:
+				agregarCentroManual(&p);
 				break;
 			case 3:
-				printf ("3. Lista Principal\n");
-				mostrarMulti(principal);
+				mostrarCentros(p);
 				break;
-
 			case 4:
-				printf ("4. Sub-Lista\n");
-				printf ("Elija Sub-lista a mostrar\n");
-				scanf_s("%i", &y);								
-				mostrarSub(principal,y);
+				eliminarCentro(&p);
+				break;
+			case 5:
+				agregarcliente(&c);
+				break;
+			case 6:
+				agregarclientemanual(&c);
+				break;
+			case 7:
+				mostrarClientes(c);
+				break;
+			case 8:
+				eliminarcliente(&c);
+				break;
+			case 9:
+				agregarproducto(p,&pr);
+				break;
+			case 10:
+				agregarproductomanual(p);
 				break;
 
-			case 5:
-				printf ("5. Buscar X en principal\n");
-				scanf_s("%i", &x);
-				//buscarXEnSubs(principal,x);
-
+			case 11:
+				printf("ingrese centro a mostrar sus productos");
+				scanf("%i",&x);
+				mostrarCenPro (p,x);
+				break;
+			case 12:
+				eliminarProductoGlobal(p);
+				break;
+			
 		};
 		if ( op!=0) system("pause");
 	};

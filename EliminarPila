@@ -1,0 +1,10 @@
+void eliminarrep(pilas **p,int x){
+	if (!(vacio(*p))){
+	 int tapa=tope(*p);
+	 desapilar(p);
+	 eliminarrep(p,x);
+	   if (tapa == x)
+	   delete(tapa);
+	   else apilar(p,tapa);
+}
+}
