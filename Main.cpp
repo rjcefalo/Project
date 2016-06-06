@@ -17,6 +17,8 @@ void main ( ){
 	CentroVentas *p=NULL;
 	Clientes *c=NULL;
 	productos *pr=NULL;
+	ventasHechas *t=NULL;
+	comprasHechas *h=NULL;
 	while (op!=0){
 		system( "cls");
 		printf("\n\n");
@@ -52,8 +54,7 @@ void main ( ){
 				mostrarCentros(p);
 				break;
 			case 4:
-				scanf("%i",&x);
-				mostrarVentasHechas(p,x);
+				ventasPorCentro(p,t);
 				break;
 			case 5:
 				eliminarCentro(&p);
@@ -68,8 +69,7 @@ void main ( ){
 				mostrarClientes(c);
 				break;
 			case 9:
-				scanf("%i",&x);
-				mostrarComprasHechas(c,p);
+				cambiaT(c,h);
 				break;
 			case 10:
 				eliminarcliente(&c);
@@ -98,7 +98,14 @@ void main ( ){
 				else
 					fecha=fecha+1;
 				}
+				ordenaCompraClientes(c);
 				break;
+
+			case 16:
+				scanf("%i",&x);
+				mostrarcompras(c,x);
+				break;
+
 		}
 		if ( op!=0) system("pause");
 	}

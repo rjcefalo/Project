@@ -295,32 +295,84 @@ void mostrarCenPro (CentroVentas *p, int x){
 	}
 	else mostrarCenPro(p->sig,x);
 }
-void mostrarComprasHechas(Clientes *p,CentroVentas *c){
-	ventasHechas *t=c->abajo;
-	int codigo=t->Codproducto,cantidadproducto=0;
-	while(codigo){	
-	printf("Compras Hechas Por el Cliente de Cedula %i: ",p->cedula);
+void mostrarcompras(Clientes *p,int x){
+	comprasHechas *t=p->abajo;
+	if (p->cedula==x){
+		printf("Ventas Hechas Por el Centro de Codigo %i: ",p->cedula);
 		while(t){
-			if((p->cedula==t->cedula)&&(codigo==t->Codproducto)){
+			printf("\nFecha: %i",t->fecha);
+			printf("\nCed. Cliente: %i",t->Codcentro);
+			printf("\nCod. Producto: %i",t->Codproducto);
+			printf("\nPrecio: %i",t->precio);
+			t=t->abajo;
+		}
+	}
+	else
+		mostrarcompras(p->sig,x);
+}
+
+void mostrarComprasHechas(Clientes *c,comprasHechas *t){
+	if (t==NULL)
+		t=c->abajo;
+	if (c->abajo){
+		int codigo=t->Codproducto,cantidadproducto=0;	
+		while(t){
+			if(codigo==t->Codproducto){
 				cantidadproducto=cantidadproducto+1;
-				t=t->abajo;
 			}
 			t=t->abajo;
+			if (t==NULL)//(p->cedula==t->cedula)&&(codigo!=t->Codproducto))
+				break;
+			else if(codigo!=t->Codproducto)
+				break;
 		}
-		printf("Producto %i comprados %i: ",codigo,cantidadproducto);
-		cantidadproducto=0;
-		t=c->abajo;
-		while ((t)&&(t->Codproducto==codigo)){
-			t=t->abajo;
-		}
-
-		if(t)
-			codigo=t->Codproducto;
+		if (cantidadproducto!=0)
+			printf("Producto %i comprados :%i \n",codigo,cantidadproducto);
 		else
-			codigo=NULL;
+			printf("\n");
+	 }  if(t!=NULL)
+		mostrarComprasHechas(c,t);
 	}
+
+void cambiaT(Clientes *c,comprasHechas *t){
+	if (c){
+	printf("\nCompras Hechas Por el Cliente de Cedula %i: \n",c->cedula);
+	mostrarComprasHechas(c,t);
+	cambiaT(c->sig,t);
 }
-void mostrarVentasHechas(CentroVentas *p,int x){
+}
+
+void mostrarVentasHechas(CentroVentas *c,ventasHechas *t){
+	if (t==NULL)
+		t=c->abajo;
+	if (c->abajo){
+		int codigo=t->Codproducto,cantidadproducto=0;	
+		while(t){
+			if(codigo==t->Codproducto){
+				cantidadproducto=cantidadproducto+1;
+			}
+			t=t->abajo;
+			if (t==NULL)//(p->cedula==t->cedula)&&(codigo!=t->Codproducto))
+				break;
+			else if(codigo!=t->Codproducto)
+				break;
+		}
+		if (cantidadproducto!=0)
+			printf("Producto %i comprados :%i \n",codigo,cantidadproducto);
+		else
+			printf("\n");
+	 }  if(t!=NULL)
+		mostrarVentasHechas(c,t);
+}
+
+void ventasPorCentro(CentroVentas *c,ventasHechas *t){
+	if (c){
+		printf("\nVentas totales por el centro de Codigo %i: \n",c->codigo);
+	mostrarVentasHechas(c,t);
+	ventasPorCentro(c->sig,t);
+}
+}
+/*void mostrarVentasHechas(CentroVentas *p,int x){
 	ventasHechas *t=p->abajo;
 	if (p->codigo==x){
 		printf("Ventas Hechas Por el Centro de Codigo %i: ",p->codigo);
@@ -334,4 +386,4 @@ void mostrarVentasHechas(CentroVentas *p,int x){
 	}
 	else
 		mostrarVentasHechas(p->sig,x);
-}
+}*/
