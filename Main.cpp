@@ -52,6 +52,8 @@ void main ( ){
 				mostrarCentros(p);
 				break;
 			case 4:
+				scanf("%i",&x);
+				mostrarVentasHechas(p,x);
 				break;
 			case 5:
 				eliminarCentro(&p);
@@ -67,7 +69,7 @@ void main ( ){
 				break;
 			case 9:
 				scanf("%i",&x);
-				mostrarComprasHechas(c,x);
+				mostrarComprasHechas(c,p);
 				break;
 			case 10:
 				eliminarcliente(&c);
