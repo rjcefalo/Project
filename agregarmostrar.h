@@ -94,10 +94,6 @@ void agregarCentroManual(CentroVentas **p){
 			printf("El centro de codigo %i ya existe\n", t->codigo);
 		}
 		}
-		
-
-
-
 void mostrarClientes(Clientes *p){
 	if (p){
 		printf("Cedula		: %i\n", p->cedula);
@@ -180,7 +176,6 @@ void agregarclientemanual(Clientes **p){
 			printf("El cliente de cedula %i ya existe\n", t->cedula);
 	}
 	}
-
 void mostrarProductos(productos *p){
 	if (p){
 		printf("Codigo		 : %i\n", p->codigo);
@@ -190,7 +185,6 @@ void mostrarProductos(productos *p){
 		mostrarProductos(p->sig);
 	}
 }
-
 void agregarproducto(CentroVentas *centro, productos **p){
 	char archivo[20];
 	FILE *listaproductos;
@@ -252,8 +246,6 @@ void agregarproducto(CentroVentas *centro, productos **p){
 	mostrarProductos(*p);
 	*p=NULL;
 }
-
-
 void agregarproductomanual(CentroVentas *centro){
 	int i=0,x=0,y=0,z=0, codigoCentro;	
 		productos *t=new productos;
@@ -289,9 +281,7 @@ void agregarproductomanual(CentroVentas *centro){
 				aux2->prox=t;
 			}
 		}
-}
-
-		
+}	
 void mostrarCenPro (CentroVentas *p, int x){
 	productos *t = p->prox;
 	if (p->codigo==x){
@@ -305,3 +295,22 @@ void mostrarCenPro (CentroVentas *p, int x){
 	}
 	else mostrarCenPro(p->sig,x);
 }
+void mostrarComprasHechas(Clientes *p,int x){
+	//if (p->abajo){
+	comprasHechas *t=p->abajo;
+	if (p->cedula==x){
+		printf("Compras Hechas Por el Cliente de Cedula %i: ",p->cedula);
+		while(t){
+			printf("\nFecha: %i",t->fecha);
+			printf("\nCod. Centro: %i",t->Codcentro);
+			printf("\nCod. Producto: %i",t->Codproducto);
+			printf("\nPrecio: %i",t->precio);
+			t=t->abajo;
+		}
+	}
+	else
+		mostrarComprasHechas(p->sig,x);
+}
+	/*else
+		printf("El Cliente No Posee Compras\n");
+}*/

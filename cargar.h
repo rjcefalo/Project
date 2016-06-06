@@ -1,5 +1,7 @@
 #include "modificareliminar.h"
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int colapso(CentroVentas *p){
 	while(p){
@@ -10,12 +12,12 @@ int colapso(CentroVentas *p){
 	return 0;
 }
 
-void nuevacompra(Clientes *p,int x){
+void nuevacompra(Clientes *p,int x,int y,int z,int w){
 	comprasHechas *t=new comprasHechas;
 	t->fecha=x;
-	t->Codcentro=NULL;
-	t->Codproducto=NULL;
-	t->precio=NULL;
+	t->Codcentro=y;
+	t->Codproducto=z;
+	t->precio=w;
 	if (p->abajo==NULL){
 		t->abajo=NULL;
 		p->abajo=t;
@@ -43,35 +45,28 @@ void nuevaventa(CentroVentas *p,int x,int y,int z,int w){
 	}
 }
 
-
-void cargartodo(CentroVentas *centros, Clientes *client,int fecha){
-
-	if (client!=NULL){
-			int x=0;
-		while (centros!=NULL){
-			nuevacompra(client,fecha);
-			if (centros->prox!=NULL){
-				if (centros->prox->cantidad==0){
-					productos *eliminar = centros->prox;
-					centros->prox=eliminar->sig;
-					delete eliminar;
-				}
-
-				if (client->abajo->Codproducto!=centros->prox->codigo){
-					nuevaventa(centros,fecha,client->cedula,centros->prox->codigo,centros->prox->precio);
-					client->abajo->Codcentro=centros->codigo;
-					client->abajo->Codproducto=centros->prox->codigo;
-					client->abajo->precio=centros->prox->precio;
-					centros->prox->cantidad=centros->prox->cantidad-1;
-					x=x+1;
-				}
-					centros=centros->sig;
-				
-			}
-			else
-				centros=centros->sig;
-			
+void cargartodo(CentroVentas *centro, Clientes *client,int fecha){
+	if (centro){
+		if ((centro->prox)&&(centro->prox->cantidad==0)){
+			productos *eliminar = centro->prox;
+			centro->prox=eliminar->sig;
+			delete eliminar;
 		}
-		cargartodo(centros,client->sig,fecha);			
+		if (centro->prox){
+			if ((client->abajo==NULL)||(client->abajo->fecha!=fecha)||(client->abajo->Codproducto!=centro->prox->codigo)){
+				nuevacompra(client,fecha,centro->codigo,centro->prox->codigo,centro->prox->precio);
+				nuevaventa(centro,fecha,client->cedula,centro->prox->codigo,centro->prox->precio);
+				centro->prox->cantidad=centro->prox->cantidad-1;
+			}
+		}
+		cargartodo(centro->sig,client,fecha);
+	}
+}	
+
+void cambiacliente(CentroVentas *centro, Clientes *cliente, int fecha){
+	if (cliente){
+		cargartodo(centro,cliente,fecha);
+		cambiacliente(centro,cliente->sig,fecha);
 	}
 }
+	
