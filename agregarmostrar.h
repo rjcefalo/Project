@@ -607,19 +607,30 @@ void consultaporclientescompras(Clientes *c,comprasHechas *t){
 				break;
 		}
 		if (cantidadcompras!=0){
-			aux->nombre=c->nombre;
-			aux->cedula=c->cedula;
-			aux->direccion=c->direccion;
+			Clientes *aux2= new Clientes;
+			//aux->nombre=c->nombre;
+			aux2->cedula=cantidadcompras;
+			if (aux){
+				aux2->sig=aux;
+				aux=aux2;
+				aux2->sig->sig=NULL;
+			}
+			else {
+				aux=aux2;
+				aux->sig=NULL;
+			}
+			//aux->direccion=c->direccion;
 			/*h=fopen("consultas.txt","a");
 				fprintf(h,"Este cliente compro %i productos\n",cc,cant);
 				fclose(h);*/
 		}
 		else
 			printf("");
-		if(t!=NULL)
-		consultaporclientescompras(c->sig,t);
+		
 	}
 	ordenarcomprastoltales(aux);
-	printf("El cliente %s de cedula %i realizo %s compras\n",aux->nombre,aux->cedula,aux->direccion);
+	printf("El cliente  de cedula  realizo %i compras\n",aux->cedula);
+	if(t!=NULL)
+		consultaporclientescompras(c->sig,t);
 }
 

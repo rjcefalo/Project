@@ -114,15 +114,15 @@ void ordenarcomprastoltales(Clientes *cliente){
 	Clientes *p=cliente;
 			int x;
 			char u[40],k[20];
-		while (p){
-			Clientes *t=p;
-			while (t){
-				if ((p->direccion)<(t->direccion)){
+		while ((p)&&(p->sig)){
+			Clientes *t=p->sig;
+			while ((t)&&(t->sig)){
+				if ((p->cedula)<(t->cedula)){
 					
 					//swap(p->Codcentro,t->Codcentro);
-					u=p->direccion;
+					/*u=p->direccion;
 					p->direccion=t->direccion;
-					t->direccion=u;
+					t->direccion=u;*/
 
 					//swap(p->Codproducto,t->Codproducto);
 					x=p->cedula;
@@ -130,9 +130,9 @@ void ordenarcomprastoltales(Clientes *cliente){
 					t->cedula=x;
 
 					//swap(p->fecha,t->fecha);
-					k=p->nombre;
+				/*	k=p->nombre;
 					p->nombre=t->nombre;
-					t->nombre=k;
+					t->nombre=k;*/
 
 				}
 				t=t->sig;
