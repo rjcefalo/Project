@@ -6,7 +6,7 @@
 
 
 void main ( ){
-	int x=0, y=0, z=0, op= -1;
+	int x=0, y=0, z=0, w=0, cc=0, op= -1;
 	int fecha=1;
 	char nom[20], ciu[20], est[20], dir[40];
 	FILE *principales = fopen("princip.txt","r");
@@ -37,8 +37,12 @@ void main ( ){
 		printf ("12. Crear Nuevo Producto Manual\n");
 		printf ("13. Mostrar Productos de Centro X\n");
 		printf ("14. Eliminar Producto Global\n");
-		printf ("15. Empezar Ventas\n");
-		printf ("16. Cargar Datos Anteriores\n");
+		printf ("15. Modificar Producto Global X\n");
+		printf ("16. Empezar Ventas\n");
+		printf ("17. Cargar Datos Anteriores\n");
+		printf ("18. Mostrar compras\n");
+		printf ("19. Mostrar ventas\n");
+		printf ("20. Consulta por centro de venta X, compras totales por cliente\n");
 		printf ("0. Salir\n");
 		scanf_s ("%i", &op);
 		system( "cls" );
@@ -92,6 +96,11 @@ void main ( ){
 				eliminarProductoGlobal(p,x);
 				break;
 			case 15:
+				printf("ingrese codigo del producto que desee modificar");
+				scanf("%i",&x);
+				modificarProductosGlobal(&p,x,y,z,w);
+				break;
+			case 16:
 				while (colapso(p)){
 					cambiacliente(p,c,fecha);
 				if (colapso(p)==0)
@@ -104,18 +113,24 @@ void main ( ){
 				crearArchivoClientes(c);
 				break;
 
-			case 16:
-				cargaranterior(&p,&c);
-				break;
-
 			case 17:
-				scanf("%i",&x);
-				mostrarcompras(c,x);
+				cargaranterior(&p,&c);
 				break;
 
 			case 18:
 				scanf("%i",&x);
+				mostrarcompras(c,x);
+				break;
+
+			case 19:
+				scanf("%i",&x);
 				mostrarventas(p,x);
+				break;
+			case 20:
+				ordenaclientecentro(c);
+				printf("ingrese codigo del centro que desea consultar");
+				scanf("%i",&cc);
+				pasacliente(c,h,cc);
 				break;
 		}
 		if ( op!=0) system("pause");

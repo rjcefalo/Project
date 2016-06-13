@@ -542,3 +542,51 @@ void mostrarventas(CentroVentas *p,int x){
 	else
 		mostrarventas(p->sig,x);
 }
+
+void consultaporcentro(Clientes *c,comprasHechas *t,int cc){
+	FILE *h;
+	if (t==NULL)
+		t=c->abajo;
+	if (c->abajo){
+		int codigo=t->Codproducto,cantidadproducto=0;	
+		while(t){
+			if(t->Codcentro==cc){
+				cantidadproducto=cantidadproducto+1;
+			}
+			t=t->abajo;
+			if (t==NULL)
+				break;
+			else if(t->Codcentro!=cc)
+				break;
+		}
+		if (cantidadproducto!=0){
+			int cant=0;
+			cant+=cantidadproducto;
+			printf("En el centro de codigo %i, este cliente compro %i productos\n",cc,cant);
+			h=fopen("consultas.txt","a");
+				fprintf(h,"En el centro de codigo %i, este cliente compro %i productos\n",cc,cant);
+				fclose(h);
+		}
+		else
+			printf("");
+	}  if(t!=NULL)
+		consultaporcentro(c,t,cc);
+	}
+
+void pasacliente(Clientes *c,comprasHechas *t, int cc){
+	int n=1;
+	FILE *h;
+	if (n!=0){
+	h=fopen("consultas.txt","a");
+				fprintf(h,"\n -----CONSULTA POR CENTRO DE VENTAS, COMPRAS TOTALES POR CLIENTE----\n");
+				fclose(h);
+				n=0;}
+	if (c){
+		printf("\n Total Compras Hechas Por el Cliente de Cedula %i:\n",c->cedula);
+		h=fopen("consultas.txt","a");
+				fprintf(h,"\n Total Compras Hechas Por el Cliente de Cedula %i:\n",c->cedula);
+				fclose(h);
+	consultaporcentro(c,t,cc);
+	pasacliente(c->sig,t,cc);
+}
+}

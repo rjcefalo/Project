@@ -126,3 +126,62 @@ void eliminarProductoGlobal(CentroVentas *p,int x){
 }
 	else printf("eliminados");
 }
+
+void modificarProductosGlobal(CentroVentas **p,int x, int y, int z, int w){
+	FILE *centro;
+	if (y == 0){
+		int n=1;
+			printf("A continuacion puede editar los datos del producto de codigo %i\n",x);
+			printf("\nIndique el nuevo codigo que desee asignar\n");
+			scanf("%i",&y);
+			printf("\nIndique el nuevo precio que desee asignar\n");
+			scanf("%i",&z);
+			printf("\nIndique la nueva cantidad que desee asignar\n");
+			scanf("%i",&w);
+	}
+	if (*p){
+	if((*p)->prox)
+		printf("\n%i",(*p)->prox->codigo);
+	productos *help=(*p)->prox;
+	if(help)
+		printf("\n%i",help->codigo);
+
+	if (((*p))&&((*p)->prox)){
+
+		if(help->codigo==x){
+			while(y!=0){
+			help->codigo=y;
+			help->precio=z;
+			help->cantidad=w;
+			break;
+			}
+		
+		}
+		else {	
+				while(help->sig!=NULL){
+				help=help->sig;
+				if(help->codigo==x){
+					while(y!=0){
+				help->codigo=y;
+				help->precio=z;
+				help->cantidad=w;
+				break;
+				
+				}
+			}
+		}
+		}
+		
+	}
+	centro=fopen("modificacion.txt","a");
+
+				fprintf(centro,"\nEl producto de codigo %i se modifico con los siguientes datos en el centro %i:\n",x,(*p)->codigo);
+				fprintf(centro,"Nuevo Codigo:%i\n",y);
+				fprintf(centro,"Nuevo Precio:%i\n",z);
+				fprintf(centro,"Nueva Cantidad:%i\n",w);
+				fclose(centro);	
+	modificarProductosGlobal(&((*p)->sig),x,y,z,w);
+	}
+	printf("\nMODIFICADO");
+				
+}
