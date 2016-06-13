@@ -86,17 +86,17 @@ void main ( ){
 				agregarproductomanual(p);
 				break;
 			case 13:
-				printf("ingrese centro a mostrar sus productos");
+				printf("ingrese centro a mostrar sus productos\n");
 				scanf("%i",&x);
 				mostrarCenPro (p,x);
 				break;
 			case 14:
-				printf("ingrese codigo del producto que desee eliminar");
+				printf("ingrese codigo del producto que desee eliminar\n");
 				scanf("%i",&x);
 				eliminarProductoGlobal(p,x);
 				break;
 			case 15:
-				printf("ingrese codigo del producto que desee modificar");
+				printf("ingrese codigo del producto que desee modificar\n");
 				scanf("%i",&x);
 				modificarProductosGlobal(&p,x,y,z,w);
 				break;
@@ -128,9 +128,12 @@ void main ( ){
 				break;
 			case 20:
 				ordenaclientecentro(c);
-				printf("ingrese codigo del centro que desea consultar");
+				printf("ingrese codigo del centro que desea consultar\n");
 				scanf("%i",&cc);
-				pasacliente(c,h,cc);
+				pasacliente(c,h,cc,y);
+				break;
+			case 21:
+				consultaporclientescompras(c,h);
 				break;
 		}
 		if ( op!=0) system("pause");

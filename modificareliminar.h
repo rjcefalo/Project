@@ -131,7 +131,7 @@ void modificarProductosGlobal(CentroVentas **p,int x, int y, int z, int w){
 	FILE *centro;
 	if (y == 0){
 		int n=1;
-			printf("A continuacion puede editar los datos del producto de codigo %i\n",x);
+			printf("\nA continuacion puede editar los datos del producto de codigo %i\n",x);
 			printf("\nIndique el nuevo codigo que desee asignar\n");
 			scanf("%i",&y);
 			printf("\nIndique el nuevo precio que desee asignar\n");
@@ -175,7 +175,7 @@ void modificarProductosGlobal(CentroVentas **p,int x, int y, int z, int w){
 	}
 	centro=fopen("modificacion.txt","a");
 
-				fprintf(centro,"\nEl producto de codigo %i se modifico con los siguientes datos en el centro %i:\n",x,(*p)->codigo);
+				fprintf(centro,"\n-----EL PRODUCTO DE CODIGO %i SE MODIFICO CON LOS SEGUIENTE DATOS, EN EL CENTRO %i:-----\n",x,(*p)->codigo);
 				fprintf(centro,"Nuevo Codigo:%i\n",y);
 				fprintf(centro,"Nuevo Precio:%i\n",z);
 				fprintf(centro,"Nueva Cantidad:%i\n",w);

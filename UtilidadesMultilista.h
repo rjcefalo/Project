@@ -110,3 +110,37 @@ void ordenaclientecentro(Clientes*p){
 		ordenaclientecentro(p->sig);
 	}
 }
+void ordenarcomprastoltales(Clientes *cliente){
+	Clientes *p=cliente;
+			int x;
+			char u[40],k[20];
+		while (p){
+			Clientes *t=p;
+			while (t){
+				if ((p->direccion)<(t->direccion)){
+					
+					//swap(p->Codcentro,t->Codcentro);
+					u=p->direccion;
+					p->direccion=t->direccion;
+					t->direccion=u;
+
+					//swap(p->Codproducto,t->Codproducto);
+					x=p->cedula;
+					p->cedula=t->cedula;
+					t->cedula=x;
+
+					//swap(p->fecha,t->fecha);
+					k=p->nombre;
+					p->nombre=t->nombre;
+					t->nombre=k;
+
+				}
+				t=t->sig;
+
+			}
+			p=p->sig;
+			t=p->sig;
+		}
+}
+
+
