@@ -38,6 +38,7 @@ void main ( ){
 		printf ("13. Mostrar Productos de Centro X\n");
 		printf ("14. Eliminar Producto Global\n");
 		printf ("15. Empezar Ventas\n");
+		printf ("16. Cargar Datos Anteriores\n");
 		printf ("0. Salir\n");
 		scanf_s ("%i", &op);
 		system( "cls" );
@@ -69,7 +70,7 @@ void main ( ){
 				mostrarClientes(c);
 				break;
 			case 9:
-				cambiaT(c,h);
+				mostrarCompras(c,h);
 				break;
 			case 10:
 				eliminarcliente(&c);
@@ -99,13 +100,23 @@ void main ( ){
 					fecha=fecha+1;
 				}
 				ordenaCompraClientes(c);
+				crearArchivoCentros(p);
+				crearArchivoClientes(c);
 				break;
 
 			case 16:
+				cargaranterior(&p,&c);
+				break;
+
+			case 17:
 				scanf("%i",&x);
 				mostrarcompras(c,x);
 				break;
 
+			case 18:
+				scanf("%i",&x);
+				mostrarventas(p,x);
+				break;
 		}
 		if ( op!=0) system("pause");
 	}

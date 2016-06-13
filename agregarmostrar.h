@@ -298,10 +298,10 @@ void mostrarCenPro (CentroVentas *p, int x){
 void mostrarcompras(Clientes *p,int x){
 	comprasHechas *t=p->abajo;
 	if (p->cedula==x){
-		printf("Ventas Hechas Por el Centro de Codigo %i: ",p->cedula);
+		printf("Compras Hechas Por el Cliente de Ccedula %i: ",p->cedula);
 		while(t){
 			printf("\nFecha: %i",t->fecha);
-			printf("\nCed. Cliente: %i",t->Codcentro);
+			printf("\nCod. Centro: %i",t->Codcentro);
 			printf("\nCod. Producto: %i",t->Codproducto);
 			printf("\nPrecio: %i",t->precio);
 			t=t->abajo;
@@ -334,11 +334,11 @@ void mostrarComprasHechas(Clientes *c,comprasHechas *t){
 		mostrarComprasHechas(c,t);
 	}
 
-void cambiaT(Clientes *c,comprasHechas *t){
+void mostrarCompras(Clientes *c,comprasHechas *t){
 	if (c){
 	printf("\nCompras Hechas Por el Cliente de Cedula %i: \n",c->cedula);
 	mostrarComprasHechas(c,t);
-	cambiaT(c->sig,t);
+	mostrarCompras(c->sig,t);
 }
 }
 
@@ -372,18 +372,173 @@ void ventasPorCentro(CentroVentas *c,ventasHechas *t){
 	ventasPorCentro(c->sig,t);
 }
 }
-/*void mostrarVentasHechas(CentroVentas *p,int x){
+
+void crearVentasCentros(CentroVentas*p){
+	FILE *archivo= fopen("SAVEDATACentros.txt","a");
+	ventasHechas *ventas;
+	if(p){
+		if (p->abajo)
+			ventas=p->abajo;
+		while (ventas){
+			fprintf(archivo,"$ %i %i %i %i\n", ventas->fecha,ventas->cedula,ventas->Codproducto,ventas->precio);
+			ventas=ventas->abajo;
+		}
+fclose(archivo);
+	}
+	
+}
+void crearArchivoCentros(CentroVentas *p){
+	FILE *archivo= fopen("SAVEDATACentros.txt","a");
+	if(p){
+		fprintf(archivo,"@ %i %s %s %s %s %s\n", p->codigo, p->nombre,p->telf,p->ciudad,p->estado,p->direccion);		
+		fclose(archivo);
+		crearVentasCentros(p);
+
+		crearArchivoCentros(p->sig);
+	}
+}
+
+void crearComprasClientes(Clientes *p){
+	FILE *archivo= fopen("SAVEDATAClientes.txt","a");
+	comprasHechas *compras;
+	if(p){
+		//EN EL ARCHIVO QUEDA EN ORDEN DEBAJO DE LOS CLIENTES COMO
+		//FECHA, CODIGO DEL PRODUCTO, CODIGO DEL CENTRO, PRECIO DEL PRODUCTO
+		if (p->abajo)
+			compras=p->abajo;
+		while (compras){
+			fprintf(archivo,"$ %i %i %i %i\n", compras->fecha,compras->Codproducto, compras->Codcentro, compras->precio);
+			compras=compras->abajo;
+		}
+fclose(archivo);
+	}
+	
+}
+
+void crearArchivoClientes(Clientes *p){
+	FILE *archivo= fopen("SAVEDATAClientes.txt","a");
+	if(p){
+		//EN EL ARCHIVO QUEDA IMPRESO EN ORDEN ARRIBA DE LAS COMPRAS COMO
+		//NOMBRE, CEDULA, DIRECCION
+
+		fprintf(archivo,"@ %s %i %s\n", p->nombre, p->cedula,p->direccion);		
+		fclose(archivo);
+		crearComprasClientes(p);
+		crearArchivoClientes(p->sig);
+	}
+}
+
+void cargarcentrosanterior(CentroVentas **p){
+	FILE *centros;
+	centros=fopen("SAVEDATACentros.txt","r");		
+		while(!feof(centros)){
+			CentroVentas *t=new CentroVentas;
+			ventasHechas *aux= new ventasHechas;
+			char op=NULL;
+			int x,y,w,z,q;
+			fscanf(centros,"%c",&op);
+			if (op=='@'){
+				fscanf(centros,"%i",&x);
+				t->codigo=x;
+				fscanf(centros,"%s",t->telf);
+				fscanf(centros,"%s",t->nombre);
+				fscanf(centros,"%s",t->ciudad);
+				fscanf(centros,"%s",t->estado);
+				fscanf(centros,"%s\n",t->direccion);
+				if (!aux){
+					t->sig=NULL;
+					t->abajo=NULL;
+					t->prox=NULL;
+					*p=t;}
+				else{
+					t->sig=*p;
+					t->abajo=NULL;
+					t->prox=NULL;
+					*p=t;
+				}
+			}
+			else {
+				fscanf(centros,"%i",&x);
+				aux->fecha=x;
+				fscanf(centros,"%i",&y);
+				aux->cedula=y;
+				fscanf(centros,"%i",&z);
+				aux->Codproducto=z;
+				fscanf(centros,"%i\n",&w);
+				aux->precio=w;
+				if (!(*p)->abajo){
+					aux->abajo=NULL;
+					(*p)->abajo=aux;
+				}
+				else{
+					aux->abajo=(*p)->abajo;
+					(*p)->abajo=aux;
+				}
+			}
+		}
+		fclose(centros);
+
+
+}
+void cargarclientesanterior(Clientes**c){
+		FILE *clien;
+		clien=fopen("SAVEDATAClientes.txt","r");		
+		while(!feof(clien)){
+			Clientes *t=new Clientes;
+			comprasHechas *aux= new comprasHechas;
+			char op=NULL;
+			int x,y,w,z,q;
+			fscanf(clien,"%c",&op);
+			if (op=='@'){
+				fscanf(clien,"%s",t->nombre);
+				fscanf(clien,"%i",&x);
+				t->cedula=x;				
+				fscanf(clien,"%s\n",t->direccion);
+				if (!aux){
+					t->sig=NULL;
+					t->abajo=NULL;
+					*c=t;}
+				else{
+					t->sig=*c;
+					t->abajo=NULL;
+					*c=t;
+				}
+			}
+			else {
+				fscanf(clien,"%i",&x);
+				aux->fecha=x;
+				fscanf(clien,"%i",&y);
+				aux->Codproducto=y;
+				fscanf(clien,"%i",&z);
+				aux->Codcentro=z;
+				fscanf(clien,"%i\n",&w);
+				aux->precio=w;
+				if (!(*c)->abajo){
+					aux->abajo=NULL;
+					(*c)->abajo=aux;
+				}
+				else{
+					aux->abajo=(*c)->abajo;
+					(*c)->abajo=aux;
+				}
+			}
+		}
+		fclose(clien);
+}
+void cargaranterior(CentroVentas **p,Clientes**c){
+	cargarcentrosanterior(p);
+	cargarclientesanterior(c);
+
+}
+void mostrarventas(CentroVentas *p,int x){
 	ventasHechas *t=p->abajo;
 	if (p->codigo==x){
 		printf("Ventas Hechas Por el Centro de Codigo %i: ",p->codigo);
 		while(t){
 			printf("\nFecha: %i",t->fecha);
-			printf("\nCed. Cliente: %i",t->cedula);
-			printf("\nCod. Producto: %i",t->Codproducto);
-			printf("\nPrecio: %i",t->precio);
 			t=t->abajo;
 		}
 	}
 	else
-		mostrarVentasHechas(p->sig,x);
-}*/
+		mostrarventas(p->sig,x);
+}
