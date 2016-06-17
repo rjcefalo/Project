@@ -1,3 +1,4 @@
+
 #include "UtilidadesPila.h"
 
 struct multipila {
@@ -59,7 +60,32 @@ void ordenarComprasHechas(Clientes *cliente){
 				t=p->abajo;
 		}
 	}
+void ordenarconsultaporcliente(ordenar *o){
+	
+		ordenar *p=o;
+			int x;
+		while (p->abajo){
+			ordenar *t=p->abajo;
+			while (t){
+				if ((p->valor)<(t->valor)){
+					
+					//swap(p->Codcentro,t->Codcentro);
+					x=p->valor;
+					p->valor=t->valor;
+					t->valor=x;
 
+					//swap(p->Codproducto,t->Codproducto);
+					x=p->cedula;
+					p->cedula=t->cedula;
+					t->cedula=x;
+				}
+				t=t->abajo;
+
+			}
+			p=p->abajo;
+				t=p->abajo;
+		}
+	}
 
 void ordenaCompraClientes(Clientes*p){
 	if (p){
@@ -99,7 +125,7 @@ void ordenarcodcentro(Clientes *cliente){
 
 			}
 			p=p->abajo;
-				t=p->abajo;
+			t=p->abajo;
 		}
 	}
 
@@ -110,37 +136,3 @@ void ordenaclientecentro(Clientes*p){
 		ordenaclientecentro(p->sig);
 	}
 }
-void ordenarcomprastoltales(Clientes *cliente){
-	Clientes *p=cliente;
-			int x;
-			char u[40],k[20];
-		while ((p)&&(p->sig)){
-			Clientes *t=p->sig;
-			while ((t)&&(t->sig)){
-				if ((p->cedula)<(t->cedula)){
-					
-					//swap(p->Codcentro,t->Codcentro);
-					/*u=p->direccion;
-					p->direccion=t->direccion;
-					t->direccion=u;*/
-
-					//swap(p->Codproducto,t->Codproducto);
-					x=p->cedula;
-					p->cedula=t->cedula;
-					t->cedula=x;
-
-					//swap(p->fecha,t->fecha);
-				/*	k=p->nombre;
-					p->nombre=t->nombre;
-					t->nombre=k;*/
-
-				}
-				t=t->sig;
-
-			}
-			p=p->sig;
-			t=p->sig;
-		}
-}
-
-

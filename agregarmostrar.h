@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "UtilidadesMultilista.h"
 
  
@@ -545,6 +548,7 @@ void mostrarventas(CentroVentas *p,int x){
 
 void consultaporcentro(Clientes *c,comprasHechas *t,int cc){
 	FILE *h;
+	int cant=0;
 	if (t==NULL)
 		t=c->abajo;
 	if (c->abajo){
@@ -559,12 +563,11 @@ void consultaporcentro(Clientes *c,comprasHechas *t,int cc){
 			else if(t->Codcentro!=cc)
 				break;
 		}
-		if (cantidadproducto!=0){
-			int cant=0;
-			cant+=cantidadproducto;
-			printf("Este cliente compro %i productos\n",cc,cant);
+		if (cantidadproducto){
+			//cant+=cantidadproducto;
+			printf("Este cliente compro %i productos\n",cantidadproducto);
 			h=fopen("consultas.txt","a");
-				fprintf(h,"Este cliente compro %i productos\n",cc,cant);
+				fprintf(h,"Este cliente compro %i productos\n",cantidadproducto);
 				fclose(h);
 		}
 		else
@@ -591,46 +594,53 @@ void pasacliente(Clientes *c,comprasHechas *t, int cc,int y){
 	pasacliente(c->sig,t,cc,1);
 }
 }
-void consultaporclientescompras(Clientes *c,comprasHechas *t){
-	FILE *h;
-	Clientes *aux= new Clientes;
-	int cantidadcompras=0;	
+void preconsultaporcliente(Clientes *c, ordenar **o){
+	int x=0;
 	if (c){
-	if (t==NULL)
-		t=c->abajo;
-	if (c->abajo){
-		while(t){
-				cantidadcompras++;
-				t=t->abajo;
-			}
-			while (t==NULL)
-				break;
+		comprasHechas *t=c->abajo;
+
+		while (t){
+			x=x+1;	
+			t=t->abajo;
 		}
-		if (cantidadcompras!=0){
-			Clientes *aux2= new Clientes;
-			//aux->nombre=c->nombre;
-			aux2->cedula=cantidadcompras;
-			if (aux){
-				aux2->sig=aux;
-				aux=aux2;
-				aux2->sig->sig=NULL;
-			}
-			else {
-				aux=aux2;
-				aux->sig=NULL;
-			}
-			//aux->direccion=c->direccion;
-			/*h=fopen("consultas.txt","a");
-				fprintf(h,"Este cliente compro %i productos\n",cc,cant);
-				fclose(h);*/
+		ordenar *aux= new ordenar;
+		aux->cedula=c->cedula;
+		aux->valor=x;
+		if (!*o){
+			aux->abajo=NULL;
+			*o=aux;
 		}
-		else
-			printf("");
-		
+		else{
+			aux->abajo=*o;
+			*o=aux;
+		}
+
+		preconsultaporcliente(c->sig,o);
 	}
-	ordenarcomprastoltales(aux);
-	printf("El cliente  de cedula  realizo %i compras\n",aux->cedula);
-	if(t!=NULL)
-		consultaporclientescompras(c->sig,t);
+	
+}
+void consultaporcliente(Clientes *c, ordenar **o){
+	preconsultaporcliente(c,o);
+	ordenarconsultaporcliente(*o);
+	ordenar *t=*o;
+	while (t){
+		printf("El cliente de cedula %i compro %i veces\n",t->cedula,t->valor);
+		t=t->abajo;
+	}
+
 }
 
+void consultanombreiguales(Clientes *c, char nombre[20]){
+	if (c){
+		if (nombre==c->nombre){
+			printf("Si entro en el if");
+			printf("\nNombre:	%s\n",c->nombre);
+			printf("Cedula:	%i\n",c->cedula);
+			printf("Direccion:	%s\n",c->direccion);
+		}
+		printf("\%s",nombre);
+		printf("no entro en el if\n");
+
+		consultanombreiguales(c->sig,nombre);
+	}	
+}

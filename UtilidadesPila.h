@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 struct pila {
 	int valor;
 	pila *abajo;
@@ -28,6 +29,11 @@ struct comprasHechas{
 	comprasHechas *abajo;
 };
 
+struct ordenar{
+	int valor;
+	int cedula;
+	ordenar *abajo;
+};
 int vacio(pila *p){
 	return (p==NULL);
 }
@@ -44,6 +50,7 @@ int tope(pila *p){
 		return p->valor;
 	return 0;
 }
+
 
 void desapilar(pila **p){
 	if(!vacio(*p)){

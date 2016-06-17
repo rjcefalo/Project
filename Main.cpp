@@ -19,6 +19,7 @@ void main ( ){
 	productos *pr=NULL;
 	ventasHechas *t=NULL;
 	comprasHechas *h=NULL;
+	ordenar *o=NULL;
 	while (op!=0){
 		system( "cls");
 		printf("\n\n");
@@ -104,7 +105,7 @@ void main ( ){
 				while (colapso(p)){
 					cambiacliente(p,c,fecha);
 				if (colapso(p)==0)
-					printf("Fecha de colapso: %i\n",fecha-1);
+					printf("Fecha de colapso: %i\n",fecha);
 				else
 					fecha=fecha+1;
 				}
@@ -115,6 +116,7 @@ void main ( ){
 
 			case 17:
 				cargaranterior(&p,&c);
+				ordenaCompraClientes(c);
 				break;
 
 			case 18:
@@ -131,9 +133,14 @@ void main ( ){
 				printf("ingrese codigo del centro que desea consultar\n");
 				scanf("%i",&cc);
 				pasacliente(c,h,cc,y);
+				ordenaCompraClientes(c);
 				break;
 			case 21:
-				consultaporclientescompras(c,h);
+				consultaporcliente(c,&o);
+				break;
+			case 22:
+				scanf("%s",&nom);
+				consultanombreiguales(c,nom);
 				break;
 		}
 		if ( op!=0) system("pause");
