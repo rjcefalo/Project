@@ -620,27 +620,51 @@ void preconsultaporcliente(Clientes *c, ordenar **o){
 	
 }
 void consultaporcliente(Clientes *c, ordenar **o){
+	FILE *h;
+		printf("\n -----CONSULTA  POR CLIENTE, COMPRAS TOTALES----\n");
+	h=fopen("consultas.txt","a");
+				fprintf(h,"\n -----CONSULTA POR CLIENTE, COMPRAS TOTALES----\n");
+				fclose(h);
+
 	preconsultaporcliente(c,o);
 	ordenarconsultaporcliente(*o);
 	ordenar *t=*o;
 	while (t){
 		printf("El cliente de cedula %i compro %i veces\n",t->cedula,t->valor);
+		h=fopen("consultas.txt","a");
+			fprintf(h,"El cliente de cedula %i compro %i veces\n",t->cedula,t->valor);
+				fclose(h);
 		t=t->abajo;
 	}
 
 }
 
-void consultanombreiguales(Clientes *c, char nombre[20]){
+
+
+void consultanombreiguales(Clientes *c, char nombre[20], int y){
+	FILE *h;
+	if (y==0){
+		printf("\n -----CONSULTA POR NOMBRE DE CLIENTE----\n");
+	h=fopen("consultas.txt","a");
+				fprintf(h,"\n -----CONSULTA POR NOMBRE DE CLIENTE----\n");
+				fclose(h);
+	}
 	if (c){
-		if (nombre==c->nombre){
-			printf("Si entro en el if");
+		int ret= strncmp(nombre, c->nombre, 20);
+		if (ret==0){
 			printf("\nNombre:	%s\n",c->nombre);
 			printf("Cedula:	%i\n",c->cedula);
 			printf("Direccion:	%s\n",c->direccion);
+			h=fopen("consultas.txt","a");
+			fprintf(h,"\nNombre:	%s\n",c->nombre);
+			fprintf(h,"Cedula:	%i\n",c->cedula);
+			fprintf(h,"Direccion:	%s\n",c->direccion);
+				fclose(h);
 		}
-		printf("\%s",nombre);
-		printf("no entro en el if\n");
 
-		consultanombreiguales(c->sig,nombre);
-	}	
+		consultanombreiguales(c->sig,nombre,1);
+	}
 }
+
+
+void consultaporproducto(Clientes *c,comprasHechas *t,aux *a, int x){}

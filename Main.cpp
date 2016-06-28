@@ -20,6 +20,7 @@ void main ( ){
 	ventasHechas *t=NULL;
 	comprasHechas *h=NULL;
 	ordenar *o=NULL;
+	aux *a=NULL;
 	while (op!=0){
 		system( "cls");
 		printf("\n\n");
@@ -29,21 +30,25 @@ void main ( ){
 		printf ("3. Mostrar Centros De Venta\n");
 		printf ("4. Mostrar Ventas Por Centro de Ventas X\n");
 		printf ("5. Eliminar Centro de Codigo X\n");
-		printf ("6. Cargar Clientes Desde Archivo\n");
-		printf ("7. Agregar Nuevo Cliente Manual\n");
-		printf ("8. Mostrar Clientes\n");
-		printf ("9. Mostrar Compras Hechas de Cliente X\n");
-		printf ("10. Eliminar Cliente de Cedula X\n");
-		printf ("11. Cargar Producto Desde Archivo a Centro de Codigo X\n");
-		printf ("12. Crear Nuevo Producto Manual\n");
-		printf ("13. Mostrar Productos de Centro X\n");
-		printf ("14. Eliminar Producto Global\n");
-		printf ("15. Modificar Producto Global X\n");
-		printf ("16. Empezar Ventas\n");
-		printf ("17. Cargar Datos Anteriores\n");
-		printf ("18. Mostrar compras\n");
-		printf ("19. Mostrar ventas\n");
-		printf ("20. Consulta por centro de venta X, compras totales por cliente\n");
+		printf ("6. Modificar Centro de Venta X\n");
+		printf ("7. Cargar Clientes Desde Archivo\n");
+		printf ("8. Agregar Nuevo Cliente Manual\n");
+		printf ("9. Mostrar Clientes\n");
+		printf ("10. Mostrar Compras Hechas de Cliente X\n");
+		printf ("11. Eliminar Cliente de Cedula X\n");
+		printf ("12. Modificar cliente X\n");
+		printf ("13. Cargar Producto Desde Archivo a Centro de Codigo X\n");
+		printf ("14. Crear Nuevo Producto Manual\n");
+		printf ("15. Mostrar Productos de Centro X\n");
+		printf ("16. Eliminar Producto Global\n");
+		printf ("17. Modificar Producto Global X\n");
+		printf ("18. Empezar Ventas\n");
+		printf ("19. Cargar Datos Anteriores\n");
+		printf ("20. Mostrar compras\n");
+		printf ("21. Mostrar ventas\n");
+		printf ("22. Consulta por centro de venta X, compras totales por cliente\n");
+		printf ("23. Consulta por por cliente, COMPRAS TOTALES\n");
+		printf ("24. Consulta nombres similares\n");
 		printf ("0. Salir\n");
 		scanf_s ("%i", &op);
 		system( "cls" );
@@ -66,42 +71,52 @@ void main ( ){
 				eliminarCentro(&p);
 				break;
 			case 6:
-				agregarcliente(&c);
+				printf("\nIngrese el codigo del centro que quiere modificar\n");
+				scanf("%i",&x);
+				modificarCentrosVenta(&p,x,y);
 				break;
 			case 7:
-				agregarclientemanual(&c);
+				agregarcliente(&c);
 				break;
 			case 8:
-				mostrarClientes(c);
+				agregarclientemanual(&c);
 				break;
 			case 9:
-				mostrarCompras(c,h);
+				mostrarClientes(c);
 				break;
 			case 10:
-				eliminarcliente(&c);
+				mostrarCompras(c,h);
 				break;
 			case 11:
-				agregarproducto(p,&pr);
+				eliminarcliente(&c);
 				break;
 			case 12:
-				agregarproductomanual(p);
+				printf("\nIngrese la cedula del cliente que quiere modificar\n");
+				scanf("%i",&x);
+				modificarcliente(&c,x,y);
 				break;
 			case 13:
-				printf("ingrese centro a mostrar sus productos\n");
+				agregarproducto(p,&pr);
+				break;
+			case 14:
+				agregarproductomanual(p);
+				break;
+			case 15:
+				printf("Ingrese centro a mostrar sus productos\n");
 				scanf("%i",&x);
 				mostrarCenPro (p,x);
 				break;
-			case 14:
-				printf("ingrese codigo del producto que desee eliminar\n");
+			case 16:
+				printf("Ingrese codigo del producto que desee eliminar\n");
 				scanf("%i",&x);
 				eliminarProductoGlobal(p,x);
 				break;
-			case 15:
-				printf("ingrese codigo del producto que desee modificar\n");
+			case 17:
+				printf("Ingrese codigo del producto que desee modificar\n");
 				scanf("%i",&x);
 				modificarProductosGlobal(&p,x,y,z,w);
 				break;
-			case 16:
+			case 18:
 				while (colapso(p)){
 					cambiacliente(p,c,fecha);
 				if (colapso(p)==0)
@@ -114,34 +129,35 @@ void main ( ){
 				crearArchivoClientes(c);
 				break;
 
-			case 17:
+			case 19:
 				cargaranterior(&p,&c);
 				ordenaCompraClientes(c);
 				break;
 
-			case 18:
+			case 20:
 				scanf("%i",&x);
 				mostrarcompras(c,x);
 				break;
 
-			case 19:
+			case 21:
 				scanf("%i",&x);
 				mostrarventas(p,x);
 				break;
-			case 20:
+			case 22:
 				ordenaclientecentro(c);
-				printf("ingrese codigo del centro que desea consultar\n");
+				printf("Ingrese codigo del centro que desea consultar\n");
 				scanf("%i",&cc);
 				pasacliente(c,h,cc,y);
 				ordenaCompraClientes(c);
 				break;
-			case 21:
+			case 23:
 				consultaporcliente(c,&o);
 				break;
-			case 22:
+			case 24:
+				printf("Ingrese el nombre que desea consultar\n");
 				scanf("%s",&nom);
-				consultanombreiguales(c,nom);
-				break;
+				consultanombreiguales(c,nom,y);
+				break;	
 		}
 		if ( op!=0) system("pause");
 	}

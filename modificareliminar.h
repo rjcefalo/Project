@@ -185,3 +185,45 @@ void modificarProductosGlobal(CentroVentas **p,int x, int y, int z, int w){
 	printf("\nMODIFICADO");
 				
 }
+void modificarCentrosVenta(CentroVentas **p,int x,int y){
+	if (*p){
+		if ((*p)->codigo==x){
+			printf("\nA CONTINUACION PUEDE MODIFICAR EL CENTRO\n");
+			printf("\nIngrese el nuevo codigo del centro\n");
+			scanf("%i",&y);
+				((*p)->codigo)=y;
+			printf("\nIngrese el nuevo nombre del centro\n");
+			scanf("%s",(*p)->nombre);
+			printf("\nIngrese la nueva ciudad del centro\n");
+			scanf("%s",(*p)->ciudad);
+			printf("\nIngrese el nuevo estado del centro\n");
+			scanf("%s",(*p)->estado);
+			printf("\nIngrese la nueva direccion del centro\n");
+			scanf("%s",(*p)->direccion);
+		}	 
+		else 
+			modificarCentrosVenta(&(*p)->sig,x,y);
+	}
+	else 
+		if (!(*p))
+			printf("\n NO SE ENCONTRO EL CENTRO DESEADO \n");
+}
+void modificarcliente(Clientes **p,int x,int y){
+	if (*p){
+		if ((*p)->cedula==x){
+			printf("\nA CONTINUACION PUEDE MODIFICAR EL CLIENTE\n");
+			printf("\nIngrese la nueva cedula del cliente\n");
+			scanf("%i",&y);
+				((*p)->cedula)=y;
+			printf("\nIngrese el nuevo nombre del cliente\n");
+			scanf("%s",(*p)->nombre);
+			printf("\nIngrese la nueva direccion del cliente\n");
+			scanf("%s",(*p)->direccion);
+		}	 
+		else 
+			modificarcliente(&(*p)->sig,x,y);
+	}
+	else 
+		if (!(*p))
+			printf("\n NO SE ENCONTRO EL CLIENTE DESEADO \n");
+}

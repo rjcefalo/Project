@@ -7,6 +7,14 @@ struct multipila {
 	pila *abajo;
 };
 
+struct aux {
+	char nombre[20];
+	int cedula;
+	int codigo;
+	int cont;
+	aux *sig;
+};
+
 struct CentroVentas{
 	int codigo;
 	char telf[20];
