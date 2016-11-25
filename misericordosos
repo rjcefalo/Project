@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "StrucMultilistas.h"
+
+void cargarmisericordiosos(Misericordiosos **m){
+	FILE *misericordiosos;
+	misericordiosos=fopen("misericordiosos.txt","r");		
+		while(!feof(misericordiosos)){
+		misericordiosos *aux=*m;
+		misericordiosos *t=new misericordiosos;
+		fgets(t->cedula,20,misericordiosos);
+		fgets(t->nombre,20,misericordiosos);
+		fgets(t->apellido,20,misericordiosos);
+		fgets(t->correo,20,misericordiosos);
+		fgets(t->Rol,20,misericordiosos);
+		}
+		fclose(misericordiosos);
+}
+
+void mostrarmisercordiosos(misericordiosos *m){
+	if (m){
+		printf("Cedula		: %s\n", m->codigo);
+		printf("Nombre	: %s\n", m->telf);
+		printf("Apellido		: %s\n", m->nombre);
+		printf("Correo		: %s\n", m->ciudad);
+		printf("Rol		: %s\n", m->estado);
+		printf("\n--------------------------------\n");
+		mostrarmisericordiosos(m->sig);
+	}
+}
